@@ -1,0 +1,17 @@
+[Unit]
+Description=QuantumSync Local Player
+After=network.target sound.target mpd.service
+Wants=mpd.service
+
+[Service]
+Type=simple
+User=quantumsync
+Group=audio
+ExecStart=/usr/local/bin/quantumsync-local
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

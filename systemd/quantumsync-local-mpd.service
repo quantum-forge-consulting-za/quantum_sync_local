@@ -1,0 +1,21 @@
+[Unit]
+Description=MPD for QuantumSync Local
+After=sound.target
+
+[Service]
+Type=notify
+User=quantumsync
+Group=audio
+ExecStart=/usr/bin/mpd --no-daemon /etc/quantumsync-local/mpd.conf
+ExecStartPost=/bin/sleep 2
+ExecStartPost=/usr/bin/mpc repeat on
+ExecStartPost=/usr/bin/mpc random on
+ExecStartPost=/usr/bin/mpc update --wait
+ExecStartPost=/bin/sh -c '/usr/bin/mpc add / 2>/dev/null; /usr/bin/mpc play 2>/dev/null; true'
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
